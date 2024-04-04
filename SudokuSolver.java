@@ -18,14 +18,12 @@ public class SudokuSolver {
                     for (int num = 1; num <= 9; num++) {
                         if (isSafe(grid, i, j, num)) {
                             grid[i][j] = num;
-                            // A possible valid solution path exists
                             if (solve(grid, solutions)) {
                                 return true;
                             }
                             grid[i][j] = 0;
                         }
                     }
-                    // No more solutions possible on this branch
                     return false;
                 }
             }
