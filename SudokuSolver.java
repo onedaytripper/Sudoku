@@ -1,10 +1,12 @@
 public class SudokuSolver {
 
+    /* Returns the solved sudoku puzzle. */
     public int[][] getSolution(int[][] grid) {
         solve(grid);
         return grid;
     }
 
+    /* Solves for the missing values using recursive backtracking and constraint propagation */
     private boolean solve(int[][] grid) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
@@ -25,7 +27,8 @@ public class SudokuSolver {
         return true;
     }
 
-    private boolean isSafe(int[][] grid, int row, int col, int num) {
+    /* Determines if a number can be safely placed in a certain cell. */
+    public boolean isSafe(int[][] grid, int row, int col, int num) {
         for (int i = 0; i < grid.length; i++) {
             // Check row
             if (grid[row][i] == num) {
