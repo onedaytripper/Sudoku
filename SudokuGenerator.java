@@ -16,16 +16,33 @@ public class SudokuGenerator extends SudokuSolver {
                 grid[i][j] = value;
             }
         }
-        // Fill in the rest of the grid
-        grid = this.getSolution(grid);
-
-        int removed = 0;
-        Random random = new Random();
-        while (removed != n) {
-            grid[random.nextInt(grid.length)][random.nextInt(grid.length)] = 0;
-
-        }
-
+        // Fills in the rest of the grid
+        SudokuSolver solver = new SudokuSolver();
+        solver.solve(grid);
+        dig(grid, 10);
         return grid;
+    }
+
+    /* Removes numbers from cells at random while maintaining a single unique solution.
+    *  The number of cells cleared indicates the difficulty of the puzzle. */
+    private void dig(int[][] grid, int num) {
+        int removed = 0, row, col;
+        Random random = new Random();
+        while (removed < num) {
+            row = random.nextInt(grid.length);
+            col = random.nextInt(grid.length);
+            // Attempts to remove a digit from a random cell
+            if (grid[row][col] != 0) {
+                int current;
+                current = grid[row][col];
+                // Checks for multiple solutions
+                if (solve(copyGrid(grid)).size() == 1) {
+                    grid[row][col] = 0;
+                    removed++;
+                } else {
+                    grid[row][col] = current;
+                }
+            }
+        }
     }
 }
