@@ -1,25 +1,21 @@
 public class SudokuSolver {
 
-    /* Returns the solved sudoku puzzle. */
-    public int[][] getSolution(int[][] grid) {
-        solve(grid);
-        return grid;
-    }
-
     /* Solves for the missing values using recursive backtracking and constraint propagation */
-    private boolean solve(int[][] grid) {
+    public boolean solve(int[][] grid) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
                 if (grid[i][j] == 0) {
                     for (int num = 1; num < 10; num++) {
                         if (isSafe(grid, i, j, num)) {
                             grid[i][j] = num;
+                            // A possible valid solution path exists
                             if (solve(grid)) {
                                 return true;
                             }
                             grid[i][j] = 0;
                         }
                     }
+                    // No more solutions possible on this branch
                     return false;
                 }
             }
