@@ -1,69 +1,57 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
-public class SudokuSolver {
+public class SudokuSolver extends Sudoku {
 
-    /* Returns a list of all possible valid solutions to the puzzle. */
-    public List<int[][]> solve(int[][] grid) {
-        List<int[][]> solutions = new ArrayList<>();
-        this.solve(grid, solutions);
-        return solutions;
-    }
-
-    /* Solves for the missing values using recursive backtracking and constraint propagation */
-    private boolean solve(int[][] grid, List<int[][]> solutions) {
+    /* Backtracking algorithm to solve for missing values. */
+    public boolean solve(int[][] grid) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
                 if (grid[i][j] == 0) {
-                    for (int num = 1; num <= 9; num++) {
-                        if (isSafe(grid, i, j, num)) {
-                            grid[i][j] = num;
-                            if (solve(grid, solutions)) {
+                    int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+                    randomize(nums); // Avoids sequences of numbers in solution
+                    for (int n = 0; n < nums.length; n++) {
+                        if (isSafe(grid, i, j, nums[n])) { // Attempt to place each number
+                            grid[i][j] = nums[n];
+                            // If a valid solution exists, continue searching
+                            if (this.solve(grid)) {
                                 return true;
                             }
                             grid[i][j] = 0;
                         }
                     }
-                    return false;
+                    return false; // No more solutions are possible
                 }
             }
         }
-        int[][] solution = this.copyGrid(grid);
-        solutions.add(solution);
         return true;
     }
 
     /* Determines if a number can be safely placed in a certain cell. */
     public boolean isSafe(int[][] grid, int row, int col, int num) {
+        // Check row, column
         for (int i = 0; i < grid.length; i++) {
-            // Check row
-            if (grid[row][i] == num) {
-                return false;
-            }
-            // Check column
-            if (grid[i][col] == num) {
-                return false;
-            }
+            if (grid[row][i] == num) return false;
+            if (grid[i][col] == num) return false;
         }
         // Check box
         int boxSize = (int) Math.sqrt(grid.length);
         int boxRow = row - row % boxSize, boxCol = col - col % boxSize;
         for (int i = 0; i < boxSize; i++) {
             for (int j = 0; j < boxSize; j++) {
-                if (grid[i + boxRow][j + boxCol] == num) {
-                    return false;
-                }
+                if (grid[i + boxRow][j + boxCol] == num) return false;
             }
         }
         return true;
     }
 
-    /* Returns a copy of the current configuration of the grid. */
-    public int[][] copyGrid(int[][] grid) {
-        int[][] copy = new int[grid.length][grid.length];
-        for (int i = 0; i < 9; i++) {
-            System.arraycopy(grid[i], 0, copy[i], 0, 9);
+    /* Randomizes order of elements in array using Fisher-Yates shuffle. */
+    private void randomize(int[] nums) {
+        Random random = new Random();
+        for (int i = nums.length - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            int temp = nums[index];
+            nums[index] = nums[i];
+            nums[i] = temp;
         }
-        return copy;
     }
 }
