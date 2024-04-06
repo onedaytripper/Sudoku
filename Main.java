@@ -1,16 +1,15 @@
+import java.util.Arrays;
+
 public class Main extends SudokuGenerator {
 
     public static void main(String[] args) {
-        // 0 = extremely easy, 1 = easy, 2 = medium, 3, = difficult, 4 = impossible
-        int[][] grid;
         SudokuGenerator generator = new SudokuGenerator();
         SudokuSolver solver = new SudokuSolver();
-        grid = generator.generate(9, 4);
-        //grid = empty();
-        //solver.solve(grid);
+        int[][] grid;
+        // 0 = extremely easy, 1 = easy, 2 = medium, 3, = difficult, 4 = impossible
+        grid = generator.generate(3);
         printGrid(grid);
         count(grid);
-
     }
 
     public static int[][] multipleSolutions() {
@@ -25,7 +24,7 @@ public class Main extends SudokuGenerator {
                             {0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0}};
     }
 
-    public static int[][] hardest() {
+    public static int[][] hardestSudoku() {
         return new int[][] {{8, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 3, 6, 0, 0, 0, 0, 0}, {0, 7, 0, 0, 9, 0, 2, 0, 0},
                             {0, 5, 0, 0, 0, 7, 0, 0, 0}, {0, 0, 0, 0, 4, 5, 7, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 3, 0},
                             {0, 0, 1, 0, 0, 0, 0, 6, 8}, {0, 0, 8, 5, 0, 0, 0, 1, 0}, {0, 9, 0, 0, 0, 0, 4, 0, 0}};

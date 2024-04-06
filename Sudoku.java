@@ -1,11 +1,11 @@
 public class Sudoku {
 
-    /* Returns true if grid represents a valid solution. */
+    /* Confirms that the current grid represents a valid solution. */
     public boolean isValid(int[][] grid) {
         throw new UnsupportedOperationException("Not implemented.");
     }
 
-    /* Returns a copy of the current configuration of the grid. */
+    /* Returns a copy of the current grid. */
     public int[][] copyGrid(int[][] grid) {
         int[][] copy = new int[grid.length][grid.length];
         for (int i = 0; i < grid.length; i++) {
@@ -16,7 +16,7 @@ public class Sudoku {
         return copy;
     }
 
-    /* Prints the current configuration of the grid. */
+    /* Prints the current grid. */
     public static void printGrid(int[][] grid) {
         for (int row = 0; row < grid.length; row++) {
             if (row % 3 == 0 && row != 0) {
